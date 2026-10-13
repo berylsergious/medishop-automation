@@ -1,0 +1,27 @@
+services:
+  selenium-hub:
+    image: selenium/hub:4.49.0
+    container_name: medishop-selenium-hub
+    ports:
+      - "4444:4444"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:4444/status"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  chrome:
+    image: selenium/node-chrome:4.49.0
+    container_name: medishop-chrome
+    depends_on:
+      selenium-hub:
+        condition: service_healthy
+    shm_size: 2gb
+    environment:
+      SE_EVENT_BUS_HOST: selenium-hub
+      SE_EVENT_BUS_PUBLISH_PORT: 4442
+      SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+      SE_NODE_MAX_SESSIONS: 2
+      SE_NODE_SESSION_TIMEOUT: 120
+    ports:
+      - "7900:7900"

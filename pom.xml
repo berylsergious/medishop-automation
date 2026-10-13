@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.medishop</groupId>
+  <artifactId>medishop-automation</artifactId>
+  <version>1.0</version>
+
+  <name>medishop-automation</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.medishopqa.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>21</maven.compiler.release>
+
+    <selenium.version>4.49.0</selenium.version>
+    <cucumber.version>7.34.9</cucumber.version>
+    <gson.version>2.14.0</gson.version>
+    <assertj.version>3.27.7</assertj.version>
+    <datafaker.version>2.4.2</datafaker.version>
+    <junit.platform.version>1.14.2</junit.platform.version>
+    <surefire.version>3.5.2</surefire.version>
+    <dotenv.version>3.2.0</dotenv.version>
+  </properties>
+
+  <dependencies>
+
+  <dependency>
+    <groupId>io.github.cdimascio</groupId>
+    <artifactId>dotenv-java</artifactId>
+    <version>${dotenv.version}</version>
+</dependency>
+
+    <!-- Cucumber -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Cucumber JUnit 5 runner (this is what actually runs the features) -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit-platform-engine</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JUnit 5 platform (required for the Cucumber JUnit 5 engine) -->
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite</artifactId>
+      <version>${junit.platform.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- PicoContainer for DI between step definitions -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-picocontainer</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Selenium -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Gson for test data -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>${gson.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- AssertJ for assertions -->
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${assertj.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Datafaker for dynamic test data -->
+    <dependency>
+      <groupId>net.datafaker</groupId>
+      <artifactId>datafaker</artifactId>
+      <version>${datafaker.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+ <build>
+  <plugins>
+    <plugin>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.13.0</version>
+    </plugin>
+    <plugin>
+      <artifactId>maven-surefire-plugin</artifactId>
+      <version>3.5.2</version>
+      <configuration>
+        <includes>
+          <include>**/*Runner.java</include>
+        </includes>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+</project>
