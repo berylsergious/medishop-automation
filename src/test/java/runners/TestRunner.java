@@ -16,8 +16,11 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
         value = "stepDefinitions,hooks"
 )
 @ConfigurationParameter(
-        key = PLUGIN_PROPERTY_NAME,
-        value = "pretty,html:target/cucumber-reports/cucumber.html,json:target/cucumber-reports/cucumber.json"
+    key = PLUGIN_PROPERTY_NAME,
+    value = "pretty," +
+            "html:target/cucumber-reports/cucumber.html," +
+            "json:target/cucumber-reports/cucumber.json," +
+            "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
 )
 public class TestRunner {
 }

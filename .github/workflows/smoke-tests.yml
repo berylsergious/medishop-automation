@@ -7,6 +7,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  ALLURE_IMAGE: andgineer/allure:2.36.0
+
 permissions:
   contents: read
 
@@ -48,9 +51,29 @@ jobs:
 
       - name: Run smoke tests
         env:
-            MEDISHOP_USERNAME: ${{ secrets.MEDISHOP_USERNAME }}
-            MEDISHOP_PASSWORD: ${{ secrets.MEDISHOP_PASSWORD }}
+          MEDISHOP_USERNAME: ${{ secrets.MEDISHOP_USERNAME }}
+          MEDISHOP_PASSWORD: ${{ secrets.MEDISHOP_PASSWORD }}
         run: mvn clean test "-Dcucumber.filter.tags=@smoke"
+
+      - name: Generate Allure HTML report
+        if: always()
+        shell: bash
+        run: |
+          if [ ! -d target/allure-results ] ||
+             ! find target/allure-results -type f -name '*-result.json' -print -quit | grep -q .; then
+            echo "No Allure test results found. Skipping HTML report generation."
+            exit 0
+          fi
+
+          mkdir -p target/allure-report
+
+          docker run --rm \
+          -v "$GITHUB_WORKSPACE/target/allure-results:/app/allure-results:ro" \
+          -v "$GITHUB_WORKSPACE/target/allure-report:/app/allure-report" \
+          "$ALLURE_IMAGE" \
+          allure generate /app/allure-results --clean -o /app/allure-report
+
+          test -s target/allure-report/index.html
 
       - name: Upload test reports
         if: always()
@@ -60,6 +83,8 @@ jobs:
           path: |
             target/cucumber-reports/
             target/surefire-reports/
+            target/allure-results/
+            target/allure-report/
           if-no-files-found: warn
 
       - name: Stop Selenium Grid
