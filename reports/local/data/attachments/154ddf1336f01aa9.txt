@@ -1,0 +1,6 @@
+Scenario ID: 7c7d7ed9-33ab-4584-b19a-25d1e0b65323
+Scenario: Login Validation
+Browser: chrome
+Thread: 33
+Session ID: c181248bb2f5cf31d64912ebf325eb45
+Status: PASSED
