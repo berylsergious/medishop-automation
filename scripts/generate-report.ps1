@@ -20,6 +20,32 @@ if ($resultFiles.Count -eq 0) {
 
 Write-Host "Found $($resultFiles.Count) Allure test results." -ForegroundColor Cyan
 
+
+# Apply the version-controlled Allure failure categories.
+$categoriesSource = Join-Path `
+    $projectRoot "src\test\resources\allure\categories.json"
+
+if (-not (Test-Path $categoriesSource -PathType Leaf)) {
+    throw "Allure categories file not found: $categoriesSource"
+}
+
+# Validate the JSON before applying it.
+try {
+    Get-Content -Path $categoriesSource -Raw |
+        ConvertFrom-Json -ErrorAction Stop |
+        Out-Null
+}
+catch {
+    throw "Invalid Allure categories JSON: $($_.Exception.Message)"
+}
+
+Copy-Item `
+    -Path $categoriesSource `
+    -Destination (Join-Path $resultsDir "categories.json") `
+    -Force
+
+Write-Host "Allure failure categories applied." -ForegroundColor Green
+
 # Generate HTML directly into reports/local.
 New-Item -ItemType Directory -Force -Path $reportDir | Out-Null
 

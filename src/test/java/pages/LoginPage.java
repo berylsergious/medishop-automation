@@ -45,33 +45,27 @@ public class LoginPage extends BasePage{
     
 
     public boolean isLoginPage(){
-        waitForElementVisible(usernameField);
-         return driver.findElement(usernameField).isDisplayed();
+         return waitForElementVisible(usernameField).isDisplayed();
     }
 
     public boolean isAlertDisplayed(){
-        waitForElementVisible(login_alert_message);
-        return driver.findElement(login_alert_message).isDisplayed();
+        return waitForElementVisible(login_alert_message).isDisplayed();
     }
 
     public String getLoginAlertMessage(){
-        waitForElementVisible(login_alert_message);
-        return driver.findElement(login_alert_message).getText();
+        return waitForElementVisible(login_alert_message).getText();
     }
 
     public boolean isinvalidErrorMessageDisplayed(){
-        waitForElementVisible(invalidErrorMessage);
-        return driver.findElement(invalidErrorMessage).isDisplayed();
+        return waitForElementVisible(invalidErrorMessage).isDisplayed();
     }
 
     public String getInvalidErrorMessage(){
-        waitForElementVisible(invalidErrorMessage);
-        return driver.findElement(invalidErrorMessage).getText();
+        return waitForElementVisible(invalidErrorMessage).getText();
     }
 
     public String getInvalidEmailMessage(){
-        waitForElementVisible(invalidEmailAlert);
-        return driver.findElement(invalidEmailAlert).getText();
+        return waitForElementVisible(invalidEmailAlert).getText();
     }
 
 

@@ -55,6 +55,7 @@ jobs:
           MEDISHOP_PASSWORD: ${{ secrets.MEDISHOP_PASSWORD }}
         run: mvn clean test "-Dcucumber.filter.tags=@smoke"
 
+
       - name: Generate Allure HTML report
         if: always()
         shell: bash
@@ -65,15 +66,28 @@ jobs:
             exit 0
           fi
 
+          # Add GitHub Actions build metadata to the Allure report.
+          cat > target/allure-results/executor.json <<EOF
+          {
+            "name": "GitHub Actions",
+            "type": "github",
+            "url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}",
+            "buildOrder": ${GITHUB_RUN_NUMBER},
+            "buildName": "${GITHUB_WORKFLOW} #${GITHUB_RUN_NUMBER}",
+            "buildUrl": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          }
+          EOF
+
           mkdir -p target/allure-report
 
           docker run --rm \
-          -v "$GITHUB_WORKSPACE/target/allure-results:/app/allure-results:ro" \
-          -v "$GITHUB_WORKSPACE/target/allure-report:/app/allure-report" \
-          "$ALLURE_IMAGE" \
-          allure generate /app/allure-results --clean -o /app/allure-report
+            -v "$GITHUB_WORKSPACE/target/allure-results:/app/allure-results:ro" \
+            -v "$GITHUB_WORKSPACE/target/allure-report:/app/allure-report" \
+            "$ALLURE_IMAGE" \
+            allure generate /app/allure-results --clean -o /app/allure-report
 
           test -s target/allure-report/index.html
+
 
       - name: Upload test reports
         if: always()

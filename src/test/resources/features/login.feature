@@ -16,5 +16,5 @@ Examples:
 |${medishop_username}   |invalidPassword        |error              |
 |invalidUsername        |${medishop_password}   |invalidemailalert  |
 |jake1rufus@gmail.com   |invalidPassword        |error              |
-|                       |invalidPassword        |usernamerequired  |
-|invalidUsername        |                       |passwordrequired  |
+|                       |invalidPassword        |usernamerequired   |
+|jake1rufus@gmail.com   |                       |passwordrequired   |
