@@ -1,4 +1,7 @@
+
 package core.context;
+
+import org.openqa.selenium.WebDriver;
 
 public class ScenarioContext {
 
@@ -8,6 +11,8 @@ public class ScenarioContext {
     private long threadId;
     private String sessionId;
     private String status;
+
+    private WebDriver driver;
 
     public void startScenario(
             String scenarioId,
@@ -19,6 +24,28 @@ public class ScenarioContext {
         this.scenarioName = scenarioName;
         this.browser = browser;
         this.threadId = threadId;
+    }
+
+    public void setDriver(WebDriver driver) {
+        if (driver == null) {
+            throw new IllegalArgumentException(
+                    "WebDriver must not be null.");
+        }
+
+        this.driver = driver;
+    }
+
+    public WebDriver getDriver() {
+        if (driver == null) {
+            throw new IllegalStateException(
+                    "WebDriver has not been initialized for this scenario.");
+        }
+
+        return driver;
+    }
+
+    public void clearDriver() {
+        this.driver = null;
     }
 
     public String getScenarioId() {

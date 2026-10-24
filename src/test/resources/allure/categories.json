@@ -1,0 +1,24 @@
+
+[
+  {
+    "name": "Infrastructure Problems",
+    "matchedStatuses": ["broken", "failed"],
+    "messageRegex": "(?i).*(connection refused|unable to connect|failed to create session|session not created|disconnected|grid.*unavailable|connection reset).*",
+    "traceRegex": "(?s).*(ConnectException|UnknownHostException|SessionNotCreatedException|UnreachableBrowserException).*"
+  },
+  {
+    "name": "Automation Errors",
+    "matchedStatuses": ["broken", "failed"],
+    "messageRegex": "(?i).*(arity mismatch|defined with .* parameters|gherkin step has .* arguments|undefined step).*",
+    "traceRegex": "(?s).*(CucumberException|NoSuchElementException|StaleElementReferenceException|ElementClickInterceptedException|TimeoutException|WebDriverException|NullPointerException).*"
+  },
+  {
+    "name": "Assertion Failures",
+    "matchedStatuses": ["failed"],
+    "traceRegex": "(?s).*(AssertionError|AssertionFailedError|org\\.assertj\\.core\\.api\\.AssertionError).*"
+  },
+  {
+    "name": "Other Failures",
+    "matchedStatuses": ["failed", "broken"]
+  }
+]
